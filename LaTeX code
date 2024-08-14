@@ -1,0 +1,460 @@
+\documentclass{article}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{systeme}
+\usepackage{amssymb}
+\usepackage{blindtext}
+\usepackage{graphicx}
+\usepackage{commath}
+\usepackage{multicol}
+\usepackage{eurosym} 
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{blindtext}
+\usepackage{hyperref}
+\usepackage{accents}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usetikzlibrary{trees} % this is to allow the fork right path
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+\newcommand{\indep}{\perp \!\!\! \perp}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}{Proposizione}[section]
+\newtheorem{exercise}{Esercizio}[section]
+\newtheorem{corollary}{Corollario}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}{Definizione}[section]
+\renewcommand*{\proofname}{Dimostrazione}
+\renewcommand*\contentsname{Indice}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\setcounter{section}{-1}
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+
+
+\title{Formulario Finanza}
+\author{Giacomo Kirn}
+\date{Luglio 2024}
+
+\begin{document}
+
+\maketitle
+\vspace*{\fill}
+\begin{center}
+    \section{Introduzione}
+\end{center}
+
+Questo Formulario è il risultato di appunti presi durante il corso. Di conseguenza conterrà inevitabilmente errori e imprecisioni. Nessun docente ha revisionato il contenuto.
+
+\newpage
+
+\section{Tassi di Interesse e Prezzi}
+\section*{Legenda}
+    \noindent
+    \begin{tabularx}{\textwidth}{@{} l X @{}}
+    \toprule
+    \textbf{Simbolo} & \textbf{Descrizione} \\
+    \midrule
+    $i_q$ & Tasso di interesse equivalentw per una frazione temporale $1/q$ \\
+    $p(t,T)$ & prezzo a pronti al tempo $t$ che in $T$ consegna 1 \\
+    $p(t,S,T)$ & prezzo a termine definito al tempo $t$ con passaggio di denaro in $S$ e scadenza in $T$\\
+    $L(t,(S),T)$ & Curva dei tassi di interessa in capitalizzazione semplice\\
+    $y(t,(S),T)$ & Curva dei tassi di interesse in capitalizzazione esponenziale (yield rate)\\
+    $x = \{x_1,...,x_N\}$ & Flussi di denaro\\
+    $DU(t,x)$ & Duration del titolo al tempo t\\
+    $DU^2(t,x)$ & Duration del secondo ordine\\
+    $C(t,x)$ & Convecity di un titolo\\
+    \bottomrule
+\end{tabularx}
+
+\subsection*{Tassi Equivalenti}
+\large
+\begin{itemize}
+    \item $t' = t*q$
+    \item Capitalizzazione Composta: $i_q = (1+i)^{\frac{1}{q}}-1$
+    \item Capitalizzazione Semplice: $i_q = \frac{1}{q}$
+\end{itemize}
+
+\subsection*{Prezzo Zero CB a Pronti con scadenza in $T$ (Valore Nominale pari a 1)}
+\begin{itemize}
+    \large
+    \item Capitalizzazione Semplice: $p(t,T) = \frac{1}{1+i_s(t,T)(T-t)}$
+    \item Capitalizzazione Composta: $p(t,T) = \frac{1}{(1+i_c(t,T))^{T-t}}$
+    \item Capitalizzazione Esponenziale: $p(t,T) = 1*e^{-y(t,T)(T-t)}$
+\end{itemize}
+
+\subsection*{Tassi di Interesse a Pronti}
+\large
+\begin{itemize}
+    \item Capitalizzazione Semplice: $i_s(t,T) = L(t,T) = \frac{1-p(t,T)}{p(t,T)(T-t)}$
+    \item Capitalizzazione Composta: $i_c(t,T) = p(t,T)^{-\frac{1}{T-t}}-1$
+    \item Capitalizzazione Esponenziale: $y(t,T) = -\frac{\ln{p(t,T)}}{T-t}$
+\end{itemize}
+
+\subsection*{Tassi di Interesse a Termine}
+\large
+\begin{itemize}
+    \item Capitalizzazione Semplice: $L(t,S,T) = -\frac{p(t,T)-p(t,S)}{(T-S)p(t,T)}$
+    \item Capitalizzazione Composta: $e^{y(t,S,T)}-1$
+    \item Capitalizzazione Esponenziale: $y(t,S,T) = -\frac{ln(p(t,T))-ln(p(t,S))}{T-S}$
+\end{itemize}
+
+\subsection*{TIR}
+TIR = $i^*$ oppure $v^*=\frac{1}{(1+i^*)}$ che rende equa l'operazione: \\
+$VA(0) = \sum_{n=0}^{N} x_n(1+i^{*})^{-T_n} = \sum_{n=0}^{N} x_nv^{*T_n} = 0$ (valore attuale pari a 0 $\rightarrow$ operazione equa)
+
+\subsection*{Valore Attuale}
+\begin{itemize}
+    \item $VA(0) = \sum_{s = 0}^{T} x_s(1 + i)^{-s}$
+    \item $VA(t) = VA(0)(1+i)^t$
+\end{itemize}
+
+\subsection*{Bootstrap}
+\begin{itemize}
+    \item Per scadenze inferiori all'anno ($x \in [T_1,T_2]$):
+    $i(t,x) = \frac{(T_2-x)i(t,T_1) + (x-T_1)i(t,T_2)}{T_2-T_1}$
+\end{itemize}
+
+\subsection*{Indici Temporali}
+\begin{itemize}
+    \item $DU(t,x) = \frac{\sum_{n=1}^{N}(T_n-t)x_n(1+i(t,T_n))^{-(T_n-t)}}{p(t,x)} = \frac{\sum_{n=1}^{N}(T_n-t)x_ne^{-y(T_n-t)}}{p(t,x)}$
+    \item $DU^2(t,x) = \frac{\sum_{n=1}^{N}(T_n-t)^2x_n(1+i(t,T_n))^{-(T_n-t)}}{p(t,x)} = \frac{\sum_{n=1}^{N}(T_n-t)^2x_ne^{-y(T_n-t)}}{p(t,x)}$
+    \item $C(t,x) = \frac{\sum_{n=1}^{N}(T_n-t)(T_n-t+1)x_n(1+i(t,T_n))^{-T_n+t-2}}{\sum_{n=1}^{N}x_n(1+i(t,T_n))^{-T_n+t}}$
+\end{itemize}
+
+\subsection*{Approssimazioni}
+\begin{itemize}
+    \item Volatilità del Prezzo di un titolo $= -\frac{DU(0,x)}{1+i}$
+    \item $\Delta p(t,x) = - DU(t,x)p(t,x)\Delta y + \frac{1}{2}p(t,x)DU^{2}(0,x)\Delta y^{2}$
+    \item $\Delta p(0,x) = -\frac{1}{1+i}DU(0,x)p(0,x)\Delta i +\frac{1}{2}p(0,x)C(0,x)\Delta i^{2}$
+\end{itemize}
+
+\newpage
+
+\section{Utilità Attesa e Scelte di Portafoglio}
+
+\section*{Legenda}
+\normalsize
+\noindent
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+\toprule
+\textbf{Simbolo} & \textbf{Descrizione} \\
+\midrule
+$u(x)$ & Funzione utilità\\
+$\rho_u(\Tilde{x})$ & Premio per il rischio di una lotteria $\Tilde{x}$\\
+$CE(\Tilde{x})$ & Certo Equivalente di $\Tilde{x}$\\
+$\rho$ & Correlazione tra rendimenti di due titoli\\
+$\Tilde{r}$ & Rendimento di un portafoglio\\
+$\Tilde{r}_n$ & Rendimento del titolo n-esimo\\
+$r_f$ & Rendimento del titolo privo di rischio\\
+$e$ & Vettore dei rendimenti attesi\\
+$w_n$ & Ammonatare di ricchezzo investita nel titolo n in $T=0$\\
+$x$ & Ricchezza individuo in $T=0$\\
+$V$ & Matrice Varianza-Covarianza\\
+$I$ & Vettore di 1\\
+\bottomrule
+\end{tabularx}
+
+\large
+\subsection*{Utilità Attesa}
+\large
+\begin{itemize}
+    \item $u(CE(\Tilde{x})) = \mathbb{E}[u(\Tilde{x}]$
+    \item $CE = \mathbb{E}[\Tilde{x}] - \rho_u(\Tilde{x})$
+    % \item $\Tilde{x} \sim \mathcal{N}(\mu, \sigma^2) \rightarrow \mathbb{E}[u(\Tilde{x})] $
+\end{itemize}
+
+\subsection*{Portafoglio con 2 Titoli}
+\begin{itemize}
+    \item $\Tilde{W} = w\Tilde{r}_1 + (1-w)\Tilde{r}_2$
+    \item $\mathbb{E}[\Tilde{W}] = w\mathbb{E}[\Tilde{r}_1] + (1-w)\mathbb{E}[\Tilde{r}_2]$
+    \item $\sigma^{2}(\Tilde{W}) = w^{2}\sigma^{2}_1 + (1-w)^{2}\sigma^{2}_2 + 2w(1-w)\rho\sigma_1\sigma_2$ 
+    \item $\frac{\partial\mathbb{E}[u(\Tilde{W})]}{\partial w} = \mathbb{E}[u'(\Tilde{W})(\Tilde{r}_1-\Tilde{r}_2)]$
+\end{itemize}
+
+\subsection*{Scelte di Portafoglio con titolo privo di rischio}
+\begin{itemize}
+    \item Per massimizzare il rendimento atteso di un portafoglio: $\mathbb{E}[u'(\Tilde{W})(\Tilde{r}-\Tilde{r_f})] = 0$
+    \item Per minimizzare la varianza: $\min_w w^T V w$
+    \item Utilità Esponenziale: $w^{*} = \frac{1}{a}V^{-1}(e-r_f*I)$
+    \item Utilità Quadratica: $w^{*} = \frac{1-bx\mathbb{E}[\Tilde{r}]}{b}V^{-1}(e-r_fI) = \frac{(1-bxr_f)(\mathbb{E}[\Tilde{r}]-r_f)}{b(\sigma^2 + (\mathbb{E}[\Tilde{r}]-r_f)^2)}$
+\end{itemize}
+
+\newpage
+
+\section{Frontiera dei Portafogli}
+
+\section*{Legenda}
+\normalsize
+\noindent
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+\toprule
+\textbf{Simbolo} & \textbf{Descrizione} \\
+\midrule
+$\Tilde{r}$ & Rendimento di un portafoglio\\
+$r_f$ & Rendimento del titolo privo di rischio\\
+$e$ & Vettore dei rendimenti attesi\\
+$w_n$ & Ammonatare di ricchezzo investita nel titolo n in $T=0$\\
+$x$ & Ricchezza individuo in $T=0$\\
+$V$ & Matrice Varianza-Covarianza\\
+$I$ & Vettore di 1\\
+$\lambda$ & Esposizione nel Portafoglio Tangente\\
+\bottomrule
+\end{tabularx}
+
+\large
+\subsection*{Solo titoli Rischiosi}
+\begin{itemize}
+    \item $A = I^{T}V^{-1}e$
+    \item $B = e^{T}V^{-1}e$
+    \item $C = I^{T}V^{-1}I$
+    \item $D = BC - A^2$
+    \item $w^{p} = g + h\mathbb{E}[\Tilde{r}_p]$
+    \begin{itemize}
+        \renewcommand\labelitemii{*}
+        \item $g = (B(V^{-1}I)-A(V^{-1}e))\frac{1}{D}$
+        \item $h = (C(V^{-1}e)-A(V^{-1}I))\frac{1}{D}$
+    \end{itemize}
+    \item Portafoglio a minima varianza globale: $w_{MVP} = \frac{V^{-1}I}{C}$, di rendimento: $\mathbb{E}[\Tilde{r}_{MVP}] = \frac{A}{C}$
+    \item Rendimento atteso Portafoglio: $= w^{T}e$
+    \item Varianza Portafoglio: $= w^{T}Vw$
+    \item $\mathbb{E}[\Tilde{r}_{zc}^p] = \frac{A}{C} - \frac{\frac{D}{C^2}}{\mathbb{E}[\Tilde{r}_p]-\frac{A}{C}}$
+\end{itemize}
+
+\subsection*{In presenza di un titolo privo di Rischio}
+\begin{itemize}
+    \item $H = (e-r_fI)^{T}V^{-1}(e-r_fI) = B-2Ar_f+Cr_f^2$
+    \item $w^p = V^{-1}(e-r_fI)(\mathbb{E}[\Tilde{r}_p]-r_f)\frac{1}{H}$
+    \item Portafoglio Tangente: $w^e = \frac{V^{-1}(e-r_fI)}{I^{T}V^{-1}(e-r_fI)}$, di rendimento: $\mathbb{E}[\Tilde{r}_e] = \frac{Ar_f - B}{Cr_f - A}$
+    \item $\mathbb{E}[\Tilde{r}_p] = \lambda\mathbb{E}[\Tilde{r}_e] + (1-\lambda)r_f$
+    \begin{itemize}
+        \renewcommand\labelitemii{*}
+        \item $\lambda = \frac{(Cr_f-A)(\Tilde{r}-r_f)}{(2Ar_f-B-Cr_f^2)}$
+        \item In caso di utlità esponenziale: $\lambda = I^{T}V^{-1}(e-r_fI)\frac{1}{a}$
+    \end{itemize}
+    \item $\mathbb{E}[\Tilde{r}_p] = w^{T}e + (1-w^{T}I)r_f$
+\end{itemize}
+
+\newpage
+
+\section{Modelli di Mercato e CAPM}
+\section*{Legenda}
+\normalsize
+\noindent
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+\toprule
+\textbf{Simbolo} & \textbf{Descrizione} \\
+\midrule
+$r_m$ & Rendimento Portafoglio di Mercato\\
+$x_0^i$ & Ricchezza Individuo i\\
+$x_0^m$ & Ricchezza Economia\\
+$S$ & Numero di Stati del Mondo\\
+$I$ & Numero di Individui\\
+$e_i$ & Dotazione Iniziale Individuo $i$\\
+$q_n$ & Prezzo del Titolo $n$ in $t=0$\\
+$D$ & Matrice dei Dividendi\\
+$c$ & Piano di Consumo\\
+$V(c)$ & Valore di non Arbitraggio di $c$\\
+$\pi_s$ & Misura di Probabilità Neutrale al Rischio\\
+\bottomrule
+\end{tabularx}
+
+\large
+\subsection*{Modelli di Mercato}
+\begin{itemize}
+    \item CAPM: $\mathbb{E}[r_q] = r_f + \beta(\mathbb{E}[r_m]-r_f)$
+    \begin{itemize}
+        \renewcommand\labelitemii{*}
+        \item $\beta = \rho_q\frac{\sigma_q}{\sigma_m} = \frac{cov(r_m,r_q)}{\sigma^2(r_m)}$
+    \end{itemize}
+    \item $w_n^m = \sum_{i = 1}^{I} w_n^i\frac{x_0^i}{x_0^m}$
+    \item $r_m = \sum_{n=1}^{N} w_n^mr^n$
+    \item CCAPM: $\mathbb{E}[\Tilde{r}_n]-r_f = \frac{cov(u'(\Tilde{x}^m),\Tilde{r}_n)}{cov(u'(\Tilde{x}^m),\Tilde{r}_m)}(\mathbb{E}[\Tilde{r}_m]-r_f)$
+    \item $m_s = \delta\frac{\pi_su^{i'}(x_s)}{u^{i'}(x_0)}$
+    \item Prezzo titolo privo di rischio $= \sum_{s=1}^{S} m_s$, rendimento $= r_f = \frac{1}{\sum_{s=1}^{S} m_s}$
+    \item $q_n = \sum_{s=1}^{S} \delta\frac{\pi_su^{i'}(x_s)}{u^{i'(x_0)}}$
+\end{itemize}
+
+\subsection*{State Price e Piani di Consumo}
+\begin{itemize}
+    \item $q = D^{T}m$ (se $\exists$ $m < 0 \rightarrow \exists$ arbitraggio)
+    \item $V(c) = m^{T}c = w^{T}q$
+    \item $Dw = c$
+    \item $\pi_s = \frac{m_s}{\sum_{i=1}^{S}m_i}$
+\end{itemize}
+
+\newpage
+
+\subsection*{APT}
+\begin{center}
+    \small{\textbf{ESEMPIO} ($\mathbb{E}[x_i] = 0)$}:
+\end{center}
+
+
+\begin{multicols}{2}
+% Prima colonna
+\noindent
+\begin{minipage}[t]{\linewidth}
+\vspace*{0.24\textheight} % Modifica questo valore per centrare verticalmente
+\[
+\begin{cases}
+    r_1 = 1.1 + 0.3x_1 -0.2x_2 \\
+    r_2 = 1.15 - 0.4x_1 + 0.3x_2 \\
+    r_3 = 1.2 -0.2x_1 + 0.4x_2
+\end{cases}
+\]
+\end{minipage}
+
+\columnbreak
+% Seconda colonna
+\noindent
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[left=0pt]
+    \item Portafoglio puro rispetto alla prima componente:
+        \[
+        \begin{cases}
+            0.3w_1 -0.4w_2 -0.2w_3= 1 \\
+            -0.2w_1 +0.3w_2 +0.4w_3 = 0\\
+            w_1 +w_2+ w_3 = 1
+        \end{cases}
+        \]
+    \item Portafoglio puro rispetto alla seconda componente:
+        \[
+        \begin{cases}
+            0.3w_1 -0.4w_2 -0.2w_3= 0 \\
+            -0.2w_1 +0.3w_2 +0.4w_3 = 1\\
+            w_1 +w_2+ w_3 = 1
+        \end{cases}
+        \]
+    \item Portafoglio privo di rischio:
+        \[
+        \begin{cases}
+            0.3w_1 -0.4w_2 -0.2w_3= 0 \\
+            -0.2w_1 +0.3w_2 +0.4w_3 = 0\\
+            w_1 +w_2+ w_3 = 1
+        \end{cases}
+        \]
+    \item Portafoglio che replica:
+        $r_4 = \alpha + \beta x_1 + \gamma x_2$
+        \[
+        \begin{cases}
+            0.3w_1 -0.4w_2 -0.2w_3= \beta \\
+            -0.2w_1 +0.3w_2 +0.4w_3 = \gamma\\
+            w_1 +w_2+ w_3 = 1
+        \end{cases}
+        \]
+\end{itemize}
+\end{minipage}
+\end{multicols}
+\begin{itemize}
+    \item In assenza di opportunità di arbitraggio: $e - r_fI = B\lambda$
+    \begin{itemize}
+        \renewcommand\labelitemii{*}
+        \item $B = [\beta, \gamma]$
+        \item $\lambda_k$ premio per il rischio fattore $k$
+    \end{itemize}
+\end{itemize}
+
+\newpage
+
+\section{Derivati}
+\section*{Legenda}
+\normalsize
+\noindent
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+\toprule
+\textbf{Simbolo} & \textbf{Descrizione} \\
+\midrule
+$K$ & Strike Price\\
+$S(t)$ & Prezzo del Sottostante\\
+$F(S(t))$ & Payoff Derivato in t\\
+$u$ & Aumento Prezzo\\
+$d$ & Diminuzione Prezzo\\
+$\pi_u$ & MDP neutrale al rischio in up\\
+$\pi_d$ & MDP neutrale al rischio in down\\
+$\Delta$ & Lunghezza Periodo\\
+$C$ & Prezzo NA Call\\
+$P$ & Prezzo NA Put\\
+$x$ & Quantità Sottostante\\
+$y$ & Quantità Bond\\
+\bottomrule
+\end{tabularx}
+\large
+\begin{itemize}
+    \item Call: $F(S(t)) = [S(t) - K]^+$ 
+    \item Put: $F(S(t)) = [K - S(t)]^+$
+    \item $\pi_u = \frac{r_f-d}{u-d}$
+    \item $\pi_d = \frac{u-r_f}{u-d}$
+    \item $F(S(0)) = \frac{1}{r_f}(F(S(0)u)\pi_u + F(S(0)d)\pi_d)$ (un periodo)
+    \item $F(S(0)) = r_f^{-\delta}(\sum_{k=0}^{M}\binom{M}{k}\pi_u^k\pi_d^{M-k}F(S(0)u^kd^{M-k}))$ (M periodi)
+    \item Put Call Parity: $C + \frac{K}{r_f} = P + S$
+    \item Copertura: trovare qtà. del Bond e del Sottostante tc:\\
+    \[
+        \begin{cases}
+           uS(0)x + r_fy = F(S(0)u)\\
+           dS(0)x + r_fy = F(S(0)d)
+        \end{cases}
+        \]
+\end{itemize}
+
+
+\newpage
+
+\section{VaR e ES}
+\section*{Legenda}
+\normalsize
+\noindent
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+\toprule
+\textbf{Simbolo} & \textbf{Descrizione} \\
+\midrule
+$VaR(t)$ & Value at Risk in t\\
+$L(t)$ & Perdità in t\\
+$S(t)$ & Valore del Titolo in t\\
+$r(t+1)$ & Rendimento $=\frac{S(t+1)}{S(t)}$\\
+$V(t)$ & Valore di Mercato\\
+$y$ & Yield rate\\
+\bottomrule
+\end{tabularx}
+
+\large
+\subsection*{Anticipazioni}
+\begin{itemize}
+    \item Rendimenti Logaritmici $ = \log{\frac{S(t+1)}{S(t)}} \approx -L_{\%}(t+1) $
+    \item $L_{\%}(t+1) = 1-r(t+1)$
+\end{itemize}
+\small{Da qua poi si ricava la distribuzione della perdita}
+
+\large
+\subsection*{VaR}
+\begin{itemize}
+    \item $\mathbb{P}(L(t+h) > VaR^p(t+h)) = p$
+    \item $\mathbb{P}(L_{\%}(t+h)>VaR_{\%}^p(t+h))) = p$
+    \item $L \sim \mathcal{N}(\mu, \sigma^2) \rightarrow VaR^p(t+h) = h\mu + \sqrt{h}\sigma\phi^{-1}(1-p)V(t)$
+    \item $L(t+1) = DU(t)p(t)(y(t+1)-y(t)) \rightarrow VaR^p(t+h) = DU(t)p(t)\phi^{-1}(1-p)\sigma_y(t+1)\sqrt{h}$
+\end{itemize}
+
+\large
+\subsection*{ES}
+\begin{itemize}
+    \item $ES^p(t+h) = \frac{1}{p}\int_{0}^{p} VaR^u(t+h)du$
+    \item $L \sim \mathcal{N}(\mu, \sigma^2) \rightarrow ES^p(t+1) = \mu + \sigma\frac{\phi(\phi^{-1}(1-p))}{p}$
+\end{itemize}
+
+\end{document}
